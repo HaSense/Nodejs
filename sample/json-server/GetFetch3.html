@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        table,th,td{
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 10px;
+        }
+    </style>
+    <title>Fetch 테스트</title>
+</head>
+<body>
+    
+    <button onclick="getFetchAll()"> 전체 데이터 조회 </button><p/>
+    <button onclick="postDataOne()"> 데이터 1개 추가 </button><p/>
+    <button onclick="deleteFetch()"> 데이터 1개 삭제 </button>
+    <table>
+        <thread>
+            <tr>
+                <th>Name</th>
+                <th>Company</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Address</th>
+            </tr>
+        </thread>
+        <tbody id="tableBody">
+
+        </tbody>
+    </table>
+    <script>
+        function getFetchAll() 
+        {
+            fetch("http://localhost:3000/customers")
+            .then((response) => response.json())
+            .then((json) => {
+                const h = [];
+                for(const customer of json){
+                    h.push(`<tr>`);
+                        h.push(`<td>${customer.name}</td>`);
+                        h.push(`<td>${customer.company}</td>`);
+                        h.push(`<td>${customer.email}</td>`);
+                        h.push(`<td>${customer.phone}</td>`);
+                        h.push(`<td>${customer.address}</td>`);
+                    h.push(`</tr>`);       
+                }
+                document.getElementById("tableBody").innerHTML = h.join("");
+            });     //전체 데이터 조회
+        }
+    </script>
+    <script>
+        function postDataOne() 
+        {
+            const customer = {
+                // 전송할 데이터
+                "id": "1001",
+                "index": 1001,
+                "guid": "f11d8047-1181-4f9a-94cd-e229258584c9",
+                "isActive": false,
+                "balance": "$3,837.02",
+                "age": 32,
+                "eyeColor": "green",
+                "name": "홍길동이",
+                "gender": "남자",
+                "company": "조선",
+                "email": "valariepowers@injoy.com",
+                "phone": "+1 (849) 587-2386",
+                "address": "814 Channel Avenue"
+            };
+            fetch("http://localhost:3000/customers", {
+            method: "POST", //HTTP 요청 방법
+            body: JSON.stringify(customer),
+            headers: {
+                //헤더 값 정의
+                "content-type":"application/json; charset=UTF-8", //content-type정의
+            },
+        })
+        .then( (response) => response.json())
+        .then( (json) => console.log(json));
+        }
+
+        function deleteFetch() 
+        {
+            fetch("http://localhost:3000/customers/1001", 
+            {
+                method: "DELETE"
+            });
+        }        
+
+    </script>
+</body>
+</html>

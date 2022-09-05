@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch 테스트</title>
+</head>
+<body>
+    <button onclick="getFetchAll()"> 전체 데이터 조회 </button><p/>
+    <button onclick="getFetchOne()"> id로 조회 </button><p/>
+    <button onclick="postFetchOne()"> query로 postId=1 조회 </button><p/>
+    <script>
+        function getFetchAll() 
+        {
+            fetch("http://localhost:3000/comments")
+            .then((response) => response.json())
+            .then((json) => console.log(json));     //전체 데이터 조회
+        }
+        function getFetchOne() 
+        {
+            fetch("http://localhost:3000/comments/1")
+            .then((response) => response.json())
+            .then((json) => console.log(json));     //id로 조회
+
+        }
+        function postFetchOne() 
+        {
+            fetch("http://localhost:3000/comments?postId=1")
+            .then((response) => response.json())
+            .then((json) => console.log(json)); //query로 postId=1 조회
+        }
+    </script>
+
+</body>
+</html>
