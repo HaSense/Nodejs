@@ -5,10 +5,10 @@ app.set('view engine', 'ejs');  //html template을 ejs로 사용하겠습니다.
 app.set('views', './views');    //views 폴더를 ./views로 지정하겠습니다.  
 app.use(express.static(__dirname + '/public'));
 
-var bodyParser = require('body-parser'); 
-// Create application/x-www-form-urlencoded parser  
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
-
+//var bodyParser = require('body-parser'); //예전방식 지금은 express.json()
+//var urlencodedParser = bodyParser.urlencoded({ extended: false }) //예전방식 지금은 express.urlencoded
+app.use(express.json()) // To parse the incoming requests with JSON payloads
+app.use(express.urlencoded({extended: true})); 
 app.get('/', (req, res) => {
     res.render('free_board');
 })
